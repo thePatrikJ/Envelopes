@@ -13,18 +13,22 @@ app.get('/', (req, res) => {
     let totalBudget = 0;
     let nextId = 1
 
-app.post('/newEnv', (req, res) => {
+app.post('/envelopes/newEnv', (req, res) => {
     let newEnv = req.body;
     if (newEnv && newEnv.amount && newEnv.name) {
         newEnv.id = nextId++;
         envelopes.push(newEnv);
         totalBudget += newEnv.amount;
-        res.status(201).send(`Succes! ${totalBudget}, ${envelopes}`);
+        res.status(201).send(`Succes! Total Buget: ${totalBudget}`);
         console.log('succes');
     }
     else {
         res.sendStatus(400);
     }
+})
+
+app.get('/envelopes', (req, res) => {
+        res.send(envelopes);
 })
 
 app.listen(PORT, () => {
