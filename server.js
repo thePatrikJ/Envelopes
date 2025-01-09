@@ -28,7 +28,18 @@ app.post('/envelopes/newEnv', (req, res) => {
 })
 
 app.get('/envelopes', (req, res) => {
-        res.send(envelopes);
+    res.send(envelopes);
+})
+
+app.get('/envelopes/:id', (req, res) => {
+    const id = Number(req.params.id);
+        if (typeof id === 'number' && envelopes.length === id) {
+        const envelopeById = envelopes[id - 1];
+        res.send(envelopeById);
+    }
+    else {
+        res.sendStatus(404);
+    }
 })
 
 app.listen(PORT, () => {
