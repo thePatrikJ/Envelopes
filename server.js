@@ -42,6 +42,41 @@ app.get('/envelopes/:id', (req, res) => {
     }
 })
 
+app.put('/envelopes/:id', (req, res) => {
+    const id = Number(req.params.id);
+    const updateEnv = req.body;
+    const index = envelopes.findIndex(env => env.id === id)
+    if (index !== -1 && !envelopes.hasOwnProperty(amount) || !envelopes.hasOwnProperty(extract)) {
+        const envelope = envelopes[index];
+        if (updateEnv.extract !== undefined) {
+            envelope.amount -= updateEnv.extract;
+        }
+        if (updateEnv.amount !== undefined) {
+            envelope.amount = updateEnv.amount;
+        }
+        if (updateEnv.name) {
+            envelope.name = updateEnv.name;
+        }
+        envelopes[index] = {...envelopes[index], ...updateEnv};
+        res.sendStatus(200);
+    } 
+    else {
+        res.sendStatus(404);
+    }
+})
+
+app.delete('/envelopes/:id', (req, res) => {
+    const id = Number(req.params.id);
+    const index = envelopes.findIndex(env => env.id === id)
+    if (index !== -1) {
+        envelopes.splice(index, 1);
+        res.sendStatus(204);
+    }
+    else {
+        res.sendStatus(404);
+    }
+})
+
 app.listen(PORT, () => {
     console.log(`Server running on PORT: ${PORT}`);
 })
