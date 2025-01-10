@@ -33,7 +33,7 @@ app.get('/envelopes', (req, res) => {
 
 app.get('/envelopes/:id', (req, res) => {
     const id = Number(req.params.id);
-        if (typeof id === 'number' && envelopes.length === id) {
+        if (id && envelopes.length >= id && id > 0) {
         const envelopeById = envelopes[id - 1];
         res.send(envelopeById);
     }
